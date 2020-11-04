@@ -3,13 +3,13 @@
 ## Build tool:
 Rebar3
 
-# HTTP Server:
+## HTTP Server:
 Cowboy
 
-# External library:
+## External library:
 Jsone
 
-TODO:
+## TODO:
 - Add comments
 - Implement Units tests
 - Implement cuncurrency for faster db calls
