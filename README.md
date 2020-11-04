@@ -11,7 +11,7 @@ Jsone
 
 ## Run:
 Build and start application:  
-rebar3 shell  
+> rebar3 shell  
 
 Process payment (API calls):  
 > curl -i "http://localhost:8080/consumer?&sender_id=1"  
