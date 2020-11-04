@@ -1,11 +1,11 @@
 # Content_handler
-Build tool:
+# Build tool:
 Rebar3
 
-HTTP Server:
+# HTTP Server:
 Cowboy
 
-External library:
+# External library:
 Jsone
 
 TODO:
