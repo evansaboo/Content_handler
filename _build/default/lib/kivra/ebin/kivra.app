@@ -1,0 +1,11 @@
+{application,kivra,
+             [{description,"An OTP application"},
+              {vsn,"0.1.0"},
+              {registered,[]},
+              {mod,{kivra_app,[]}},
+              {applications,[kernel,stdlib,cowboy]},
+              {env,[]},
+              {modules,[api_handler,consumer_handler,contentDAO,kivra_app,
+                        kivra_sup,sender_handler]},
+              {licenses,["Apache 2.0"]},
+              {links,[]}]}.
