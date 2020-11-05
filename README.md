@@ -28,5 +28,6 @@ Send data:
 
 ## Future Implementations:
 - NoSQL integration with Riak, MongoDB or CouchDB
+- API security
 - Process pool for faster API handling
 - Dockerize the aplication to be deployed in Google Cloud Platform
