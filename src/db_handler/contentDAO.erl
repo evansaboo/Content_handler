@@ -27,6 +27,7 @@ start_db_connection() ->
 						";" ++
 						"PWD=" ++ get_db_user_pwd(),
 	
+	% TODO: try catch
 	{ok, Db_reference} = odbc:connect(Connection_string, []),
 	
 	Db_reference.
@@ -39,7 +40,8 @@ insert_into_table(Sender_id, Receiver_id, File_type, Is_payable) ->
 			{sql_integer, [Receiver_id]}, 
 			{{sql_varchar, 100}, [File_type]}, 
 			{sql_integer, [Is_payable]}],  
-			
+	
+	% TODO: try catch		
 	odbc:param_query(Db_reference, "INSERT INTO CONTENT 
 					(SENDER_ID, RECEIVER_ID, FILE_TYPE, IS_PAYABLE)
 					VALUES (?, ?, ?, ?);", Params).
@@ -50,9 +52,12 @@ select_is_payable(Sender_id) ->
 	Db_reference = start_db_connection(),
 
 	Params = [{sql_integer, [Sender_id]}],  
+	
+	% TODO: try catch
 	{selected, _, [{Is_payable} | _]} = 
 			odbc:param_query(Db_reference, 
 			"SELECT IS_PAYABLE FROM CONTENT WHERE SENDER_ID = ? ", Params),
+			
 	Is_payable.
 
 %% Update IS_PAYABLE value to 0 from by its corresponding Sender_id
@@ -60,6 +65,8 @@ update_is_payable(Sender_id) ->
 	Db_reference = start_db_connection(),
 
 	Params = [{sql_integer, [Sender_id]}],
+	
+	% TODO: try catch
 	odbc:param_query(Db_reference, 
 			"UPDATE CONTENT SET IS_PAYABLE = 0 WHERE SENDER_ID = ? ", Params).
 			
