@@ -1,6 +1,5 @@
 -module(contentDAO).
 
--export([start_db_connection/0]).
 -export([start_odbc/0]).
 -export([insert_into_table/4]).
 -export([select_is_payable/1]).
@@ -14,21 +13,25 @@ get_db_user_id() ->
 	
 get_db_user_pwd() ->
 	"1594826e".
-	
+
+%% Starts the odbc application
 start_odbc() ->
 	odbc:start().
-	
+
+%% Connects to an  MS SQL Server database with the provided credentials and returns a connection reference.
+% TODO: Use NoSQL database instead for faster performence with help of concurrency
 start_db_connection() ->
 	Connection_string = "DSN=" ++ get_dns_name() ++
 						";" ++
 						"UID=" ++ get_db_user_id() ++
 						";" ++
 						"PWD=" ++ get_db_user_pwd(),
-
+	
 	{ok, Db_reference} = odbc:connect(Connection_string, []),
 	
 	Db_reference.
-	
+
+%% Insert (with SQL) the provided parameters into the CONTENT table
 insert_into_table(Sender_id, Receiver_id, File_type, Is_payable) ->
 	Db_reference = start_db_connection(),
 	
@@ -42,6 +45,7 @@ insert_into_table(Sender_id, Receiver_id, File_type, Is_payable) ->
 					VALUES (?, ?, ?, ?);", Params).
 					
 
+%% Get IS_PAYABLE value from the database which is associated to the Sender_id
 select_is_payable(Sender_id) ->
 	Db_reference = start_db_connection(),
 
@@ -51,7 +55,7 @@ select_is_payable(Sender_id) ->
 			"SELECT IS_PAYABLE FROM CONTENT WHERE SENDER_ID = ? ", Params),
 	Is_payable.
 
-
+%% Update IS_PAYABLE value to 0 from by its corresponding Sender_id
 update_is_payable(Sender_id) ->
 	Db_reference = start_db_connection(),
 
