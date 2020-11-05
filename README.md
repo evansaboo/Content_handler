@@ -22,5 +22,11 @@ Send data:
 
 ## TODO:
 - Add comments
+- Implement error handling
 - Implement Units tests
 - Implement cuncurrency for faster db calls
+
+## Future Implementations:
+- NoSQL integration with Riak, MongoDB or CouchDB
+- Process pool for faster API handling
+- Dockerize the aplication to be deployed in Google Cloud Platform
