@@ -14,7 +14,7 @@ init(Req, Opts) ->
 	parse_data(Data),
 	
 	% Build a status code 200 response and return it
-	Req4 = cowboy_req:reply(200, Req3).
+	Req4 = cowboy_req:reply(200, Req3),
 	{ok, Req4, Opts}.
 	
 %% Parses the given data by extracting all the neccesary values and stores the in the database

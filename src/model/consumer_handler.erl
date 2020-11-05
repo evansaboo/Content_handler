@@ -4,27 +4,33 @@
 -export([content_types_provided/2]).
 -export([json_response/2]).
 
+%% Function used by Cowboy endpoint to handle a API REST call and return a response
 init(Req, State) ->
-io:format("test\n"),
+	% Cowboy swiches to the REST protocol and start executing the state machine.
 	{cowboy_rest, Req, State}.
-	
+
+%% Callback used by Cowboy when the cowboy_rest executes	
 content_types_provided(Req, State) ->
 	{[
 		{<<"application/json">>, json_response}
 	], Req, State}.
-	
-json_response(Req, State) ->
 
+%% Function to handle API calls which contains the sender_id parameter
+json_response(Req, State) ->
+	% TODO: try catch
 	#{sender_id := Sender_id} = cowboy_req:match_qs([{sender_id, int}], Req),
-	Is_Payable = contentDAO:select_is_payable(Sender_id),
 	
+	% TODO: try catch
+	Transaction_success = contentDAO:select_is_payable(Sender_id),
+	
+	% Check if the payment has been processed and return a success json response the API caller
 	if 
-      Is_Payable == true -> 
+      Transaction_success == true -> 
 	  contentDAO:update_is_payable(Sender_id),
-		io:fwrite("Success"); 
+		Body = <<"{\"message\":\"The payment has been processed\"}">>;
+
       true -> 
-         io:fwrite("False") 
+		Body = <<"{\"message\":\"The payment has already been processed\"}">>
 	end,
 
-	Body = <<"{\"rest\": \"Success!\"}">>,
 	{Body, Req, State}.
